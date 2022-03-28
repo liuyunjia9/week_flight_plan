@@ -1,12 +1,4 @@
-while True:
-    number = input("请输入代码：")
-    if number == '0':
-        break
-    elif number == '1':
-        date = input("请输入日期：")
-        print(date, '——', '1')
-    else:
-        print('输入有误')
+import datetime
 
 
 def is_off_day(date):
@@ -17,10 +9,37 @@ def is_off_day(date):
                 '20221001', '20221002', '20221003', '20221004', '20221005', '20221006', '20221007']
     # 工作日
     work_date = ['20220129', '20220130', '20220402', '20220424', '20220507', '20221008', '20221009']
+    # 转换格式
+    off_date_dateformat = []
+    for i in off_date:
+        off_date_dateformat.append(datetime.datetime.strptime(i, '%Y%m%d').date())
 
-    if date in off_date:
+    work_date_dateformat = []
+    for i in work_date:
+        work_date_dateformat.append(datetime.datetime.strptime(i, '%Y%m%d').date())
+
+    if date in off_date_dateformat:
         return '0'
-    elif date in work_date:
+    elif date in work_date_dateformat:
         return '1'
+    elif date.isoweekday() == 6 or date.isoweekday() == 7:
+        return '0'
+    else:
+        return '1'
+
+
+while True:
+    number = input("请输入代码：")
+    if number == '0':
+        break
+    elif number == '1':
+        date = input("请输入日期：")
+        date1 = datetime.datetime.strptime(date, '%Y%m%d').date()
+        print(is_off_day(date1))
+    else:
+        print('输入有误')
+
+
+
 
 
